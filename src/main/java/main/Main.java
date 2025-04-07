@@ -37,7 +37,7 @@ public class Main {
                     }
                     break;
                 case 3:
-                    cadastro(scanner, fipe); // Passar o scanner e o objeto fipe para o método
+                    cadastro(scanner, fipe, cadastros); // Passar o scanner e o objeto fipe para o método
                     break;
                 case 4:
                     System.out.println("Saindo...");
@@ -51,7 +51,7 @@ public class Main {
         scanner.close(); // Fechar o scanner no final da execução
     }
 
-    public static void cadastro(Scanner scanner, FipeApiClient fipe) {
+    public static void cadastro(Scanner scanner, FipeApiClient fipe, Cadastro cadastros) {
         int typeV, IdMarca;
         String Combustivel;
         String Ano;
@@ -112,7 +112,7 @@ public class Main {
 
                 break;
             case 2:
-                fipe.removerVeiculo();
+                cadastros.removerVeiculo();
                 break;
             case 3:
                 System.out.println("Cadastro de clientes:");

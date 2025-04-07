@@ -162,11 +162,6 @@ public class FipeApiClient {
         }
     }
 
-    //ponte para remoçao de veiculo
-    public void removerVeiculo(){
-        cadastros.removerVeiculo();
-    }
-
 
     // Método para fazer requisições HTTP
     public String fazerRequisicao(String urlString) {
