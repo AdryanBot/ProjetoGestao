@@ -1,4 +1,4 @@
-package veiculos;
+package entities;
 public abstract class Veiculo {
     protected int veiculoTipo;
     protected String preco;

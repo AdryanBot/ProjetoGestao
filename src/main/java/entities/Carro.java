@@ -1,9 +1,9 @@
-package veiculos;
-public class Moto extends Veiculo {
-    public Moto(int veiculoTipo, String preco, String marcaVeiculo, String modelo, int anoModelo, String combustivel, String codigoFipe, String mesReferencia, String acronCombustivel){
+package entities;
+public class Carro extends Veiculo {
+    public Carro(int veiculoTipo, String preco, String marcaVeiculo, String modelo, int anoModelo, String combustivel, String codigoFipe, String mesReferencia, String acronCombustivel){
         super(veiculoTipo, preco, marcaVeiculo, modelo, anoModelo, combustivel, codigoFipe, mesReferencia, acronCombustivel);
     }
-
+    
     public void setVeiculoTipo(int veiculoTipo){
         this.veiculoTipo = veiculoTipo;
     }
