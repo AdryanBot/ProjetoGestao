@@ -1,15 +1,10 @@
 package API;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-import entities.Caminhao;
-import entities.Carro;
-import entities.Moto;
-import entities.Veiculo;
 import cadastro.Cadastro;
 
 public class FipeApiClient {

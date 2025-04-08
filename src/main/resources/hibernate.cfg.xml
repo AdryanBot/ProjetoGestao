@@ -9,5 +9,10 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+        <mapping class="entities.Cliente"/>
+        <mapping class="entities.Vendas"/>
+        <mapping class="entities.Carro"/>
+        <mapping class="entities.Moto"/>
+        <mapping class="entities.Caminhao"/>
     </session-factory>
 </hibernate-configuration>

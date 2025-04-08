@@ -1,5 +1,46 @@
 package entities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity(name="carro")
 public class Carro extends Veiculo {
+
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name="preco",nullable = false)
+    protected String preco;
+
+    @Column(name="marca", nullable = false)
+    protected String marcaVeiculo;
+
+    @Column(name="modelo", nullable = false)
+    protected String modelo;
+
+    @Column(name="ano", nullable = false)
+    protected int anoModelo;
+
+    @Column(name="combustivel", nullable = false)
+    protected String combustivel;
+
+    @Column(name="codigo_fipe", nullable = false)
+    protected String codigoFipe;
+
+    @Column(name="mes_referencia", nullable = false)
+    protected String mesReferencia;
+
+    @Column(name="acronimo_combustivel", nullable = false)
+    protected String acronCombustivel;
+
+    @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vendas> venda = new ArrayList<>();
+
+
+
     public Carro(int veiculoTipo, String preco, String marcaVeiculo, String modelo, int anoModelo, String combustivel, String codigoFipe, String mesReferencia, String acronCombustivel){
         super(veiculoTipo, preco, marcaVeiculo, modelo, anoModelo, combustivel, codigoFipe, mesReferencia, acronCombustivel);
     }
