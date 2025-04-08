@@ -158,7 +158,7 @@ public class FipeApiClient {
     }
 
 
-    // Método para fazer requisições HTTP
+    // Metodo para fazer requisições HTTP
     public String fazerRequisicao(String urlString) {
         try {
             URL url = new URL(urlString);
