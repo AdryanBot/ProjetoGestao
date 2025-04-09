@@ -1,11 +1,17 @@
 package entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "veiculoTipo", discriminatorType = DiscriminatorType.INTEGER)
 public abstract class Veiculo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(insertable = false, updatable = false) // é controlado pelo discriminador
     protected int veiculoTipo;
 
     @Column(nullable = false)
@@ -18,7 +24,7 @@ public abstract class Veiculo {
     protected String modelo;
 
     @Column(nullable = false)
-    protected int anoModelo;
+    protected long anoModelo;
 
     @Column(nullable = false)
     protected String combustivel;
@@ -46,27 +52,25 @@ public abstract class Veiculo {
         this.acronCombustivel = acronCombustivel;
     }
 
-    // setters
+    // Getters comuns (inclusive do ID)
+    public Long getId() { return id; }
+    public int getVeiculoTipo() { return veiculoTipo; }
+    public String getPreco() { return preco; }
+    public String getMarca() { return marcaVeiculo; }
+    public String getModelo() { return modelo; }
+    public long getAno() { return anoModelo; }
+    public String getCombustivel() { return combustivel; }
+    public String getCodigoFipe() { return codigoFipe; }
+    public String getMesReferencia() { return mesReferencia; }
+    public String getAcronCombustivel() { return acronCombustivel; }
 
-    public void setVeiculoTipo(int veiculoTipo) { this.veiculoTipo = veiculoTipo; }
+    // Setters
     public void setPreco(String preco) { this.preco = preco; }
     public void setMarcaVeiculo(String marcaVeiculo) { this.marcaVeiculo = marcaVeiculo; }
     public void setModelo(String modelo) { this.modelo = modelo; }
-    public void setAnoModelo(int anoModelo) { this.anoModelo = anoModelo; }
+    public void setAnoModelo(long anoModelo) { this.anoModelo = anoModelo; }
     public void setCombustivel(String combustivel) { this.combustivel = combustivel; }
     public void setCodigoFipe(String codigoFipe) { this.codigoFipe = codigoFipe; }
     public void setMesReferencia(String mesReferencia) { this.mesReferencia = mesReferencia; }
     public void setAcronCombustivel(String acronCombustivel) { this.acronCombustivel = acronCombustivel; }
-
-    // getters abstratos
-
-    public abstract int getTipoVeiculo();
-    public abstract String getMarca();
-    public abstract String getModelo();
-    public abstract int getAno();
-    public abstract String getPreco();
-    public abstract String getCombustivel();
-    public abstract String getCodigoFipe();
-    public abstract String getMesReferencia();
-    public abstract String getAcronCombustivel();
 }

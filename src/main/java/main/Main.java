@@ -37,11 +37,13 @@ public class Main {
         int op, typeV;
 
         do {
+            System.out.println("--------------------------------------------------------");
             System.out.println("Escolha alguma das seguintes opções:");
             System.out.println("1-Vendas");
             System.out.println("2-Itens cadastrados");
             System.out.println("3-Cadastro");
             System.out.println("4-Sair");
+            System.out.println("--------------------------------------------------------");
             op = scanner.nextInt();
 
             switch (op) {

@@ -2,14 +2,19 @@ package cadastro;
 import repositories.CaminhaoRepository;
 import repositories.CarroRepository;
 import repositories.MotoRepository;
+import services.VeiculoService;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+
+import java.util.*;
+import jakarta.persistence.*;
 
 import entities.Caminhao;
 import entities.Carro;
 import entities.Moto;
 import entities.Veiculo;
+import utils.JPAUtil;
+
+import static utils.JPAUtil.*;
 
 public class Cadastro {
     ArrayList <Veiculo> listaVeiculos = new ArrayList<>();
@@ -29,27 +34,46 @@ public class Cadastro {
         mostrarVeiculos();
     }
 
-    public void atualizarPreco(){
+    public void atualizarPreco() {
         Scanner scanner = new Scanner(System.in);
-        int index;
-        System.out.println("Digite a posição na lista do veiculo que deseja atualizar o preço:");
-            index = scanner.nextInt();
-            scanner.nextLine();
-            if(index >= 0 && index<listaVeiculos.size()){
-                System.out.println("Digite o novo preço com as siglas:");
-                String novoPreco = scanner.nextLine();
-                listaVeiculos.get(index).setPreco(novoPreco);
-            }else{
-                System.out.println("Índice fora dos limites.");
-            }
+
+        System.out.print("Digite o ID do veículo que deseja atualizar o preço: ");
+        Long id = scanner.nextLong();
+        scanner.nextLine(); // limpa o buffer
+
+        VeiculoService veiculoServ = new VeiculoService();
+        Veiculo veiculo = veiculoServ.buscarPorId(id);
+
+        if (veiculo != null) {
+            System.out.print("Digite o novo preço com as siglas (ex: R$ 99.999): ");
+            String novoPreco = scanner.nextLine();
+
+            veiculo.setPreco(novoPreco);
+
+            EntityManager em = JPAUtil.getEntityManager();
+            em.getTransaction().begin();
+            em.merge(veiculo);
+            em.getTransaction().commit();
+            em.close();
+
+            System.out.println("Preço atualizado com sucesso!");
+        } else {
+            System.out.println("Veículo com ID " + id + " não encontrado.");
+        }
     }
 
-    public void mostrarVeiculos(){
-        if(listaVeiculos.isEmpty()){
+
+    public void mostrarVeiculos() {
+        VeiculoService vs = new VeiculoService();
+        List<Veiculo> listaVeiculos = vs.listarTodos();
+
+        if (listaVeiculos.isEmpty()) {
             System.out.println("Nenhum veiculo adicionado ainda!");
-        }else{
+        } else {
             for (Veiculo v : listaVeiculos) {
-                System.out.println("Tipo: " + (v.getTipoVeiculo() == 1 ? "Carro" : v.getTipoVeiculo() == 2 ? "Moto" : "Caminhão"));
+                System.out.println("--------------------------------------------------------");
+                System.out.println("Id: " + (v.getId()));
+                System.out.println("Tipo: " + (v.getVeiculoTipo() == 1 ? "Carro" : v.getVeiculoTipo() == 2 ? "Moto" : "Caminhão"));
                 System.out.println("Marca: " + v.getMarca());
                 System.out.println("Modelo: " + v.getModelo());
                 System.out.println("Ano: " + v.getAno());
@@ -58,28 +82,36 @@ public class Cadastro {
                 System.out.println("Código Fipe: " + v.getCodigoFipe());
                 System.out.println("Mês de Referência: " + v.getMesReferencia());
                 System.out.println("Acrônimo Combustível: " + v.getAcronCombustivel());
-                System.out.println("--------------------------------------------------------");
             }
         }
     }
 
+
     public void removerVeiculo(){
         Scanner scanner = new Scanner(System.in);
-        int index;
-        if(listaVeiculos.isEmpty()){
-            System.out.println("Não há nenhum veiculo adicionado para ser removido!");
-        }else{
-            System.out.println("Digite a posição na lista do veiculo que deseja deletar:");
-            index = scanner.nextInt();
-            scanner.nextLine();
-            if(index >= 0 && index<listaVeiculos.size()){
-                listaVeiculos.remove(index);
-                System.out.println("Veiculo deletado com sucesso!");
-                System.out.println("Mostrando lista de veiculos atualizada:");
-                mostrarVeiculos();
-            }else{
-                System.out.println("Índice fora dos limites.");
+        System.out.print("Digite o ID do veículo que deseja remover: ");
+
+        try {
+            Long id = Long.parseLong(scanner.nextLine());
+
+            EntityManager em = emf.createEntityManager(); // emf é seu EntityManagerFactory
+            Veiculo veiculo = em.find(Veiculo.class, id);
+
+            if (veiculo != null) {
+                em.getTransaction().begin();
+                em.remove(veiculo);
+                em.getTransaction().commit();
+                System.out.println("Veículo removido com sucesso!");
+            } else {
+                System.out.println("Veículo com ID " + id + " não encontrado.");
             }
+
+            em.close();
+
+        } catch (NumberFormatException e) {
+            System.out.println("ID inválido. Por favor, digite um número.");
+        } catch (Exception e) {
+            System.out.println("Erro ao remover veículo: " + e.getMessage());
         }
     }
 
@@ -93,7 +125,7 @@ public class Cadastro {
         }else{
             for (Veiculo v : listaVeiculos) {
                 System.out.println(posicao + " - " +
-                (v.getTipoVeiculo() == 1 ? "Carro" : v.getTipoVeiculo() == 2 ? "Moto" : "Caminhão") + " " +v.getMarca() + " " +v.getModelo() + " - " +v.getCombustivel() + " - " +v.getAno() + " | " +v.getPreco() + " - " +v.getCodigoFipe()+" |");
+                (v.getVeiculoTipo() == 1 ? "Carro" : v.getVeiculoTipo() == 2 ? "Moto" : "Caminhão") + " " +v.getMarca() + " " +v.getModelo() + " - " +v.getCombustivel() + " - " +v.getAno() + " | " +v.getPreco() + " - " +v.getCodigoFipe()+" |");
                 System.out.println("--------------------------------------------------------");
                 posicao++;
             }
@@ -105,7 +137,7 @@ public class Cadastro {
             if(index >= 0 && index<listaVeiculos.size()){
                 Veiculo veiculoSelecionado = listaVeiculos.get(index);
                 System.out.println("\nVocê selecionou o seguinte veículo:");
-                System.out.println("Tipo: " + (veiculoSelecionado.getTipoVeiculo() == 1 ? "Carro" : veiculoSelecionado.getTipoVeiculo() == 2 ? "Moto" : "Caminhão"));
+                System.out.println("Tipo: " + (veiculoSelecionado.getVeiculoTipo() == 1 ? "Carro" : veiculoSelecionado.getVeiculoTipo() == 2 ? "Moto" : "Caminhão"));
                 System.out.println("Marca: " + veiculoSelecionado.getMarca());
                 System.out.println("Modelo: " + veiculoSelecionado.getModelo());
                 System.out.println("Ano: " + veiculoSelecionado.getAno());

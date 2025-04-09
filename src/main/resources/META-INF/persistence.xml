@@ -7,9 +7,13 @@
     <persistence-unit name="meuPU">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <class>entities.Veiculo</class>
         <class>entities.Carro</class>
         <class>entities.Moto</class>
         <class>entities.Caminhao</class>
+        <class>repositories.CarroRepository</class>
+        <class>repositories.MotoRepository</class>
+        <class>repositories.CaminhaoRepository</class>
         <!-- Adicione outras entidades aqui se tiver -->
 
         <properties>
@@ -22,7 +26,7 @@
             <!-- Hibernate config -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
