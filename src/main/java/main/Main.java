@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         LogManager.getLogManager().reset();
         SLF4JBridgeHandler.install();
-        // TESTE DE CONEXÃO COM O BANCO DE DADOS USANDO HIBERNATE
+        // Teste de conexão com o banco de dados usando hibernate
         try {
             SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
             Session session = sessionFactory.openSession();
@@ -30,7 +30,7 @@ public class Main {
             return; // Para a execução do programa se a conexão falhar
         }
 
-        // PROGRAMA PRINCIPAL
+        // Programa principal
         FipeApiClient fipe = new FipeApiClient();
         Cadastro cadastros = new Cadastro();
         Scanner scanner = new Scanner(System.in);

@@ -13,5 +13,8 @@
         <mapping class="entities.Carro"/>
         <mapping class="entities.Moto"/>
         <mapping class="entities.Caminhao"/>
+        <mapping class="repositories.CarroRepository"/>
+        <mapping class="repositories.MotoRepository"/>
+        <mapping class="repositories.CaminhaoRepository"/>
     </session-factory>
 </hibernate-configuration>

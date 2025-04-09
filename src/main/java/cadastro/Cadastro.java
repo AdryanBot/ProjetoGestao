@@ -1,4 +1,7 @@
 package cadastro;
+import repositories.CaminhaoRepository;
+import repositories.CarroRepository;
+import repositories.MotoRepository;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,19 +15,18 @@ public class Cadastro {
     ArrayList <Veiculo> listaVeiculos = new ArrayList<>();
 
     public void adicionarVeiculo(String tipoVeiculo, String marca, String modelo, String ano, String codigoFipe, String preco, String combustivel, String acronCombustivel, String mesReferencia){
-        Veiculo veiculo;
-            if (tipoVeiculo.equals("cars")) {
-                veiculo = new Carro(1, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
-            } else if (tipoVeiculo.equals("motorcycles")) {
-                veiculo = new Moto(2, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
-            } else {
-                veiculo = new Caminhao(3, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
-            }
+        if (tipoVeiculo.equals("cars")) {
+            Carro carro = new Carro(1, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            new CarroRepository().salvar(carro);
+        } else if (tipoVeiculo.equals("motorcycles")) {
+            Moto moto = new Moto(2, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            new MotoRepository().salvar(moto);
+        } else {
+            Caminhao caminhao = new Caminhao(3, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            new CaminhaoRepository().salvar(caminhao);
+        }
 
-            // Adiciona o veículo à lista
-            listaVeiculos.add(veiculo);
-
-            mostrarVeiculos();
+        mostrarVeiculos();
     }
 
     public void atualizarPreco(){

@@ -2,7 +2,7 @@ package entities;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity(name="vendas")
 public class Vendas {
