@@ -27,7 +27,7 @@ public abstract class Veiculo {
     protected String modelo;
 
     @Column(nullable = false)
-    protected long anoModelo;
+    protected String anoModelo;
 
     @Column(nullable = false)
     protected String combustivel;
@@ -46,7 +46,7 @@ public abstract class Veiculo {
 
     public Veiculo() {}
 
-    public Veiculo(int veiculoTipo, String preco, String marcaVeiculo, String modelo, int anoModelo, String combustivel, String codigoFipe, String mesReferencia, String acronCombustivel) {
+    public Veiculo(int veiculoTipo, String preco, String marcaVeiculo, String modelo, String anoModelo, String combustivel, String codigoFipe, String mesReferencia, String acronCombustivel) {
         this.veiculoTipo = veiculoTipo;
         this.preco = preco;
         this.marcaVeiculo = marcaVeiculo;
@@ -64,7 +64,7 @@ public abstract class Veiculo {
     public String getPreco() { return preco; }
     public String getMarca() { return marcaVeiculo; }
     public String getModelo() { return modelo; }
-    public long getAno() { return anoModelo; }
+    public String getAno() { return anoModelo; }
     public String getCombustivel() { return combustivel; }
     public String getCodigoFipe() { return codigoFipe; }
     public String getMesReferencia() { return mesReferencia; }
@@ -74,7 +74,7 @@ public abstract class Veiculo {
     public void setPreco(String preco) { this.preco = preco; }
     public void setMarcaVeiculo(String marcaVeiculo) { this.marcaVeiculo = marcaVeiculo; }
     public void setModelo(String modelo) { this.modelo = modelo; }
-    public void setAnoModelo(long anoModelo) { this.anoModelo = anoModelo; }
+    public void setAnoModelo(String anoModelo) { this.anoModelo = anoModelo; }
     public void setCombustivel(String combustivel) { this.combustivel = combustivel; }
     public void setCodigoFipe(String codigoFipe) { this.codigoFipe = codigoFipe; }
     public void setMesReferencia(String mesReferencia) { this.mesReferencia = mesReferencia; }

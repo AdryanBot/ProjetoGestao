@@ -12,7 +12,7 @@ public class Carro extends Veiculo {
         super();
     }
 
-    public Carro(int veiculoTipo, String preco, String marcaVeiculo, String modelo, int anoModelo, String combustivel,
+    public Carro(int veiculoTipo, String preco, String marcaVeiculo, String modelo, String anoModelo, String combustivel,
                  String codigoFipe, String mesReferencia, String acronCombustivel) {
         super(veiculoTipo, preco, marcaVeiculo, modelo, anoModelo, combustivel, codigoFipe, mesReferencia, acronCombustivel);
     }

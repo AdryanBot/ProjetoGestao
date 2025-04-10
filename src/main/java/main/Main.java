@@ -53,11 +53,12 @@ public class Main {
                     int op1= scanner.nextInt();
                     scanner.nextLine();
                     if(op1 == 1){
-                    cadastros.venda();
+                        cadastros.adicionarVenda();
                     }else if(op1 == 2){
-
+                        cadastros.mostrarVendas();
                     }else{
-                        System.out.println("Opcao invalida!");
+
+                    System.out.println("Opcao invalida!");
                     }
                     break;
                 case 2:
@@ -166,7 +167,7 @@ public class Main {
                 String MMM = scanner.nextLine();
                 System.out.println("Digite o ano em que o cliente nasceu:");
                 String AAA = scanner.nextLine();
-                String dataNascimento = DDD+"-"+MMM+"-"+AAA;
+                String dataNascimento = DDD+"/"+MMM+"/"+AAA;
                 cadastros.adicionarCliente(cpf, dataNascimento, nomeCliente);
                 break;
             case 4:

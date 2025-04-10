@@ -3,6 +3,8 @@ import repositories.*;
 import services.*;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import jakarta.persistence.*;
 
@@ -18,13 +20,13 @@ public class Cadastro {
 
     public void adicionarVeiculo(String tipoVeiculo, String marca, String modelo, String ano, String codigoFipe, String preco, String combustivel, String acronCombustivel, String mesReferencia){
         if (tipoVeiculo.equals("cars")) {
-            Carro carro = new Carro(1, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            Carro carro = new Carro(1, preco, marca, modelo, ano, combustivel, codigoFipe, mesReferencia, acronCombustivel);
             new CarroRepository().salvar(carro);
         } else if (tipoVeiculo.equals("motorcycles")) {
-            Moto moto = new Moto(2, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            Moto moto = new Moto(2, preco, marca, modelo, ano, combustivel, codigoFipe, mesReferencia, acronCombustivel);
             new MotoRepository().salvar(moto);
         } else {
-            Caminhao caminhao = new Caminhao(3, preco, marca, modelo, Integer.parseInt(ano), combustivel, codigoFipe, mesReferencia, acronCombustivel);
+            Caminhao caminhao = new Caminhao(3, preco, marca, modelo, ano, combustivel, codigoFipe, mesReferencia, acronCombustivel);
             new CaminhaoRepository().salvar(caminhao);
         }
 
@@ -165,16 +167,74 @@ public class Cadastro {
         }
     }
 
-    public void adicionarVenda(){
-        
-    }
-
-
-    public void venda(){
+    public void adicionarVenda() {
         Scanner scanner = new Scanner(System.in);
-        String metodoPagamento = null;
-        
 
+        System.out.print("Digite o ID do cliente: ");
+        Long idCliente = Long.parseLong(scanner.nextLine());
+
+        System.out.print("Digite o ID do veículo: ");
+        Long idVeiculo = Long.parseLong(scanner.nextLine());
+
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            Cliente cliente = em.find(Cliente.class, idCliente);
+            Veiculo veiculo = em.find(Veiculo.class, idVeiculo);
+
+            if (cliente == null) {
+                System.out.println("Cliente com ID " + idCliente + " não encontrado.");
+                return;
+            }
+
+            if (veiculo == null) {
+                System.out.println("Veículo com ID " + idVeiculo + " não encontrado.");
+                return;
+            }
+
+            Vendas venda = new Vendas();
+            venda.setCliente(cliente);
+            venda.setVeiculo(veiculo);
+            venda.setModeloVeiculo(veiculo.getModelo());
+            venda.setMarcaVeiculo(veiculo.getMarca());
+            venda.setPrecoVeiculo(veiculo.getPreco());
+            venda.setNomeCliente(cliente.getNome());
+
+            em.getTransaction().begin();
+            em.persist(venda);
+            em.getTransaction().commit();
+
+            System.out.println("Venda registrada com sucesso!");
+
+        } catch (Exception e) {
+            System.out.println("Erro ao registrar venda: " + e.getMessage());
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+        } finally {
+            em.close();
+        }
     }
+
+
+
+    public void mostrarVendas() {
+        VendasService vendaService = new VendasService();
+        List<Vendas> listaVendas = VendasService.listarTodas();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        if (listaVendas.isEmpty()) {
+            System.out.println("Nenhuma venda registrada.");
+        } else {
+            for (Vendas v : listaVendas) {
+                System.out.println("--------------------------------------------------------");
+                System.out.println("ID da Venda: " + v.getId());
+                System.out.println("Cliente: " + v.getNomeCliente());
+                System.out.println("Veículo: " + v.getModeloVeiculo() + " - " + v.getMarcaVeiculo());
+                System.out.println("Preço: " + v.getPrecoVeiculo());
+                System.out.println("Data: " + v.getDataVenda().format(formatter));
+            }
+        }
+    }
+
 
 }
