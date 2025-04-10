@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -37,6 +40,9 @@ public abstract class Veiculo {
 
     @Column(nullable = false)
     protected String acronCombustivel;
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vendas> venda = new ArrayList<>();
 
     public Veiculo() {}
 

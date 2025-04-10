@@ -21,9 +21,24 @@ public class Cliente {
     private String cpf;
 
     @Column(name="data_nascimento",nullable = false)
-    private LocalDate nascimento;
+    private String nascimento;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vendas> venda = new ArrayList<>();
+
+    public Cliente(){
+
+    }
+
+    public Cliente(String nome, String cpf, String nascimento){
+        this.nome = nome;
+        this.cpf = cpf;
+        this.nascimento = nascimento;
+    }
+
+    public Long getId() { return id; }
+    public String getNome() { return nome; }
+    public String getCpf() { return cpf; }
+    public String getDateB() { return nascimento;}
 
 }

@@ -18,15 +18,7 @@ public class Vendas {
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "carro_id", nullable = false)
-    protected Carro carro;
-
-    @ManyToOne
-    @JoinColumn(name = "moto_id", nullable = false)
-    protected Moto moto;
-
-    @ManyToOne
-    @JoinColumn(name = "caminhao_id", nullable = false)
-    protected Caminhao caminhao;
+    @JoinColumn(name = "Veiculo_id", nullable = false)
+    protected Veiculo veiculo;
     
 }

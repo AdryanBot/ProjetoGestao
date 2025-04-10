@@ -52,13 +52,21 @@ public class Main {
                     cadastros.mostrarVeiculosVenda();
                     break;
                 case 2:
-                    cadastros.mostrarVeiculos();
-                    System.out.println("Deseja atualizar o preço de algum dos veículos cadastrados?");
-                    System.out.println("1-Sim/2-Não");
-                    op = scanner.nextInt();
+                    System.out.println("1-Clientes");
+                    System.out.println("2-Veiculos");
+                    int ope = scanner.nextInt();
                     scanner.nextLine();
-                    if(op == 1){
-                        cadastros.atualizarPreco();
+                    if(ope == 1){
+
+                    }else if(ope == 2){
+                        cadastros.mostrarVeiculos();
+                        System.out.println("Deseja atualizar o preço de algum dos veículos cadastrados?");
+                        System.out.println("1-Sim/2-Não");
+                        op = scanner.nextInt();
+                        scanner.nextLine();
+                        if(op == 1){
+                            cadastros.atualizarPreco();
+                        }
                     }
                     break;
                 case 3:

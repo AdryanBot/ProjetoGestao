@@ -8,9 +8,6 @@ import java.util.List;
 @DiscriminatorValue("1")
 public class Carro extends Veiculo {
 
-    @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vendas> venda = new ArrayList<>();
-
     public Carro() {
         super();
     }
