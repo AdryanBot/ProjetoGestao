@@ -20,5 +20,8 @@ public class Vendas {
     @ManyToOne
     @JoinColumn(name = "Veiculo_id", nullable = false)
     protected Veiculo veiculo;
+
+    @Column(name="forma_pagamento")
+    private String formaPagamento;
     
 }

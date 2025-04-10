@@ -1,6 +1,5 @@
 package entities;
 
-import java.time.LocalDate;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

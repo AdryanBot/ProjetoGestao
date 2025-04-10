@@ -48,8 +48,17 @@ public class Main {
 
             switch (op) {
                 case 1:
-                    System.out.println("Qual veículo pretende comprar?");
-                    cadastros.mostrarVeiculosVenda();
+                    System.out.println("1-Nova venda");
+                    System.out.println("2-Vendas realizadas");
+                    int op1= scanner.nextInt();
+                    scanner.nextLine();
+                    if(op1 == 1){
+                    cadastros.venda();
+                    }else if(op1 == 2){
+
+                    }else{
+                        System.out.println("Opcao invalida!");
+                    }
                     break;
                 case 2:
                     System.out.println("1-Clientes");
@@ -57,7 +66,7 @@ public class Main {
                     int ope = scanner.nextInt();
                     scanner.nextLine();
                     if(ope == 1){
-
+                        cadastros.mostrarClientes();
                     }else if(ope == 2){
                         cadastros.mostrarVeiculos();
                         System.out.println("Deseja atualizar o preço de algum dos veículos cadastrados?");
