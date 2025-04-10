@@ -11,7 +11,7 @@ public class ClienteService {
 
     public List<Cliente> listarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<Cliente> query = em.createQuery("FROM Veiculo", Cliente.class);
+        TypedQuery<Cliente> query = em.createQuery("FROM Cliente", Cliente.class);
         List<Cliente> cliente = query.getResultList();
         em.close();
         return cliente;

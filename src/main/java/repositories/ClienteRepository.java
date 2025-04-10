@@ -19,7 +19,7 @@ public class ClienteRepository {
 
     public List<Cliente> listar(){
         EntityManager em = emf.createEntityManager();
-        List<Cliente> cliente = em.createQuery("FROM Moto", Cliente.class).getResultList();
+        List<Cliente> cliente = em.createQuery("FROM Cliente", Cliente.class).getResultList();
         em.close();
         return cliente;
     }

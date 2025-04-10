@@ -146,9 +146,23 @@ public class Main {
                 break;
             case 3:
                 System.out.println("Cadastro de clientes:");
+                System.out.println("Digite o nome do cliente:");
+                scanner.nextLine();
+                String nomeCliente = scanner.nextLine();
+                System.out.println("Digite o cpf do cliente:");
+                String cpf = scanner.nextLine();
+                System.out.println("Digite o dia em que o cliente nasceu:");
+                String DDD = scanner.nextLine();
+                System.out.println("Digite o mes em que o cliente nasceu:");
+                String MMM = scanner.nextLine();
+                System.out.println("Digite o ano em que o cliente nasceu:");
+                String AAA = scanner.nextLine();
+                String dataNascimento = DDD+"-"+MMM+"-"+AAA;
+                cadastros.adicionarCliente(cpf, dataNascimento, nomeCliente);
                 break;
             case 4:
                 System.out.println("Remoção de cliente:");
+                cadastros.deletarCliente();
                 break;
             case 5:
                 System.out.println("Voltando ao menu principal...");

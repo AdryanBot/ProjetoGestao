@@ -7,7 +7,7 @@ import java.util.List;
 
 
 
-@Entity(name = " cliente")
+@Entity//
 public class Cliente {
     
     @Id

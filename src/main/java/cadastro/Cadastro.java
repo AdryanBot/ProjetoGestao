@@ -116,6 +116,7 @@ public class Cadastro {
     public void adicionarCliente(String cpf, String dataNascimento, String nomeCliente){
         Cliente cliente = new Cliente(nomeCliente, cpf, dataNascimento);
         new ClienteRepository().salvar(cliente);
+        mostrarClientes();
     }
 
     public void mostrarClientes(){
@@ -138,7 +139,7 @@ public class Cadastro {
     public void deletarCliente(){
         mostrarClientes();
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Digite o ID do veículo que deseja remover: ");
+        System.out.print("Digite o ID do cliente que deseja remover: ");
 
         try {
             Long id = Long.parseLong(scanner.nextLine());
@@ -150,9 +151,9 @@ public class Cadastro {
                 em.getTransaction().begin();
                 em.remove(cliente);
                 em.getTransaction().commit();
-                System.out.println("Veículo removido com sucesso!");
+                System.out.println("Cliente removido com sucesso!");
             } else {
-                System.out.println("Veículo com ID " + id + " não encontrado.");
+                System.out.println("Cliente com ID " + id + " não encontrado.");
             }
 
             em.close();
@@ -160,7 +161,7 @@ public class Cadastro {
         } catch (NumberFormatException e) {
             System.out.println("ID inválido. Por favor, digite um número.");
         } catch (Exception e) {
-            System.out.println("Erro ao remover veículo: " + e.getMessage());
+            System.out.println("Erro ao remover Cliente: " + e.getMessage());
         }
     }
 
