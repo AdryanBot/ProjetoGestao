@@ -1,11 +1,11 @@
-package API;
+package api;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-import cadastro.Cadastro;
+import controller.Cadastro;
 
 public class FipeApiClient {
     Cadastro cadastros = new Cadastro();

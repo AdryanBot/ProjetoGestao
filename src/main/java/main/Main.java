@@ -1,7 +1,7 @@
 package main;
 
-import API.FipeApiClient;
-import cadastro.Cadastro;
+import api.FipeApiClient;
+import controller.Cadastro;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

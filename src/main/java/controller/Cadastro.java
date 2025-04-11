@@ -1,4 +1,4 @@
-package cadastro;
+package controller;
 import repositories.*;
 import services.*;
 
