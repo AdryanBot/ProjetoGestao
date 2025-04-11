@@ -22,7 +22,7 @@ public class Cadastro {
     ArrayList<Vendas> listaVendas = new ArrayList<>();
     ArrayList<Cliente> listaCliente = new ArrayList<>();
 
-    // Método para adicionar um veículo de acordo com o tipo (Carro, Moto ou Caminhão)
+    // Metodo para adicionar um veículo de acordo com o tipo (Carro, Moto ou Caminhão)
     public void adicionarVeiculo(String tipoVeiculo, String marca, String modelo, String ano, String codigoFipe, String preco, String combustivel, String acronCombustivel, String mesReferencia){
         if (tipoVeiculo.equals("cars")) {
             Carro carro = new Carro(1, preco, marca, modelo, ano, combustivel, codigoFipe, mesReferencia, acronCombustivel);

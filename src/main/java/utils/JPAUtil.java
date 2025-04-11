@@ -11,7 +11,7 @@ public class JPAUtil {
     public static final EntityManagerFactory emf =
             Persistence.createEntityManagerFactory("meuPU");
 
-    // Método utilitário para obter uma nova instância de EntityManager
+    // Metodo utilitário para obter uma nova instância de EntityManager
     // Esse EntityManager será usado para realizar operações com o banco de dados
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
