@@ -1,4 +1,5 @@
 package controller;
+
 import repositories.*;
 import services.*;
 
@@ -15,10 +16,13 @@ import utils.JPAUtil;
 import static utils.JPAUtil.*;
 
 public class Cadastro {
-    ArrayList <Veiculo> listaVeiculos = new ArrayList<>();
-    ArrayList <Vendas> listaVendas = new ArrayList<>();
-    ArrayList <Cliente> listaCliente = new ArrayList<>();
 
+    // Listas locais para armazenar temporariamente os dados, se necessário
+    ArrayList<Veiculo> listaVeiculos = new ArrayList<>();
+    ArrayList<Vendas> listaVendas = new ArrayList<>();
+    ArrayList<Cliente> listaCliente = new ArrayList<>();
+
+    // Método para adicionar um veículo de acordo com o tipo (Carro, Moto ou Caminhão)
     public void adicionarVeiculo(String tipoVeiculo, String marca, String modelo, String ano, String codigoFipe, String preco, String combustivel, String acronCombustivel, String mesReferencia){
         if (tipoVeiculo.equals("cars")) {
             Carro carro = new Carro(1, preco, marca, modelo, ano, combustivel, codigoFipe, mesReferencia, acronCombustivel);
@@ -31,9 +35,10 @@ public class Cadastro {
             new CaminhaoRepository().salvar(caminhao);
         }
 
-        mostrarVeiculos();
+        mostrarVeiculos(); // Exibe todos os veículos após adicionar
     }
 
+    // Atualiza o preço de um veículo consultando pelo ID
     public void atualizarPreco() {
         Scanner scanner = new Scanner(System.in);
 
@@ -47,9 +52,9 @@ public class Cadastro {
         if (veiculo != null) {
             System.out.print("Digite o novo preço com as siglas (ex: R$ 99.999): ");
             String novoPreco = scanner.nextLine();
-
             veiculo.setPreco(novoPreco);
 
+            // Atualiza no banco de dados com merge
             EntityManager em = JPAUtil.getEntityManager();
             em.getTransaction().begin();
             em.merge(veiculo);
@@ -62,6 +67,7 @@ public class Cadastro {
         }
     }
 
+    // Pesquisa veículos pelo nome ou parte do nome do modelo
     public void pesquisaParcial(){
         Scanner scanner = new Scanner(System.in);
         VeiculoService service = new VeiculoService();
@@ -69,9 +75,10 @@ public class Cadastro {
         String pesquisa = scanner.nextLine();
         List<Veiculo> resultados = service.buscarPorModelo(pesquisa);
 
+        // Exibe cada veículo encontrado
         for (Veiculo v : resultados) {
             System.out.println("--------------------------------------------------------");
-            System.out.println("Id: " + (v.getId()));
+            System.out.println("Id: " + v.getId());
             System.out.println("Tipo: " + (v.getVeiculoTipo() == 1 ? "Carro" : v.getVeiculoTipo() == 2 ? "Moto" : "Caminhão"));
             System.out.println("Marca: " + v.getMarca());
             System.out.println("Modelo: " + v.getModelo());
@@ -82,10 +89,9 @@ public class Cadastro {
             System.out.println("Mês de Referência: " + v.getMesReferencia());
             System.out.println("Acrônimo Combustível: " + v.getAcronCombustivel());
         }
-
     }
 
-
+    // Lista todos os veículos cadastrados
     public void mostrarVeiculos() {
         VeiculoService vs = new VeiculoService();
         List<Veiculo> listaVeiculos = vs.listarTodos();
@@ -93,10 +99,10 @@ public class Cadastro {
         if (listaVeiculos.isEmpty()) {
             System.out.println("Nenhum veiculo adicionado ainda!");
         } else {
-            vs.mostrarQtdVeiculos();
+            vs.mostrarQtdVeiculos(); // Exibe total de veículos
             for (Veiculo v : listaVeiculos) {
                 System.out.println("--------------------------------------------------------");
-                System.out.println("Id: " + (v.getId()));
+                System.out.println("Id: " + v.getId());
                 System.out.println("Tipo: " + (v.getVeiculoTipo() == 1 ? "Carro" : v.getVeiculoTipo() == 2 ? "Moto" : "Caminhão"));
                 System.out.println("Marca: " + v.getMarca());
                 System.out.println("Modelo: " + v.getModelo());
@@ -110,16 +116,15 @@ public class Cadastro {
         }
     }
 
-
+    // Remove um veículo por ID
     public void removerVeiculo(){
-        mostrarVeiculos();
+        mostrarVeiculos(); // Exibe todos os veículos antes de remover
         Scanner scanner = new Scanner(System.in);
         System.out.print("Digite o ID do veículo que deseja remover: ");
 
         try {
             Long id = Long.parseLong(scanner.nextLine());
-
-            EntityManager em = emf.createEntityManager(); // emf é seu EntityManagerFactory
+            EntityManager em = emf.createEntityManager(); // emf é o EntityManagerFactory
             Veiculo veiculo = em.find(Veiculo.class, id);
 
             if (veiculo != null) {
@@ -140,30 +145,33 @@ public class Cadastro {
         }
     }
 
+    // Adiciona um cliente ao sistema
     public void adicionarCliente(String cpf, String dataNascimento, String nomeCliente){
         Cliente cliente = new Cliente(nomeCliente, cpf, dataNascimento);
         new ClienteRepository().salvar(cliente);
-        mostrarClientes();
+        mostrarClientes(); // Mostra todos os clientes após cadastro
     }
 
+    // Lista todos os clientes
     public void mostrarClientes(){
         ClienteService vs = new ClienteService();
         List<Cliente> listaClientes = vs.listarTodos();
 
         if(listaClientes.isEmpty()){
             System.out.println("Nenhum cliente adicionado ainda!");
-        }else{
-            vs.mostrarQtdCliente();
+        } else {
+            vs.mostrarQtdCliente(); // Exibe total
             for(Cliente c: listaClientes){
                 System.out.println("--------------------------------------------------------");
-                System.out.println("Id: " + (c.getId()));
-                System.out.println("Nome: " + (c.getNome()));
-                System.out.println("cpf: " + (c.getCpf()));
-                System.out.println("Data de nascimento: " + (c.getDateB()));
+                System.out.println("Id: " + c.getId());
+                System.out.println("Nome: " + c.getNome());
+                System.out.println("cpf: " + c.getCpf());
+                System.out.println("Data de nascimento: " + c.getDateB());
             }
         }
     }
 
+    // Remove um cliente pelo ID
     public void deletarCliente(){
         mostrarClientes();
         Scanner scanner = new Scanner(System.in);
@@ -171,8 +179,7 @@ public class Cadastro {
 
         try {
             Long id = Long.parseLong(scanner.nextLine());
-
-            EntityManager em = emf.createEntityManager(); // emf é seu EntityManagerFactory
+            EntityManager em = emf.createEntityManager();
             Cliente cliente = em.find(Cliente.class, id);
 
             if (cliente != null) {
@@ -193,14 +200,15 @@ public class Cadastro {
         }
     }
 
+    // Cadastra uma venda ligando cliente e veículo
     public void adicionarVenda() {
         Scanner scanner = new Scanner(System.in);
 
-        mostrarClientes();
+        mostrarClientes(); // Lista clientes para escolher
         System.out.print("Digite o ID do cliente: ");
         Long idCliente = Long.parseLong(scanner.nextLine());
 
-        mostrarVeiculos();
+        mostrarVeiculos(); // Lista veículos para escolher
         System.out.print("Digite o ID do veículo: ");
         Long idVeiculo = Long.parseLong(scanner.nextLine());
 
@@ -210,16 +218,12 @@ public class Cadastro {
             Cliente cliente = em.find(Cliente.class, idCliente);
             Veiculo veiculo = em.find(Veiculo.class, idVeiculo);
 
-            if (cliente == null) {
-                System.out.println("Cliente com ID " + idCliente + " não encontrado.");
+            if (cliente == null || veiculo == null) {
+                System.out.println("Cliente ou veículo não encontrado.");
                 return;
             }
 
-            if (veiculo == null) {
-                System.out.println("Veículo com ID " + idVeiculo + " não encontrado.");
-                return;
-            }
-
+            // Cria objeto de venda e preenche os dados
             Vendas venda = new Vendas();
             venda.setCliente(cliente);
             venda.setVeiculo(veiculo);
@@ -228,6 +232,7 @@ public class Cadastro {
             venda.setPrecoVeiculo(veiculo.getPreco());
             venda.setNomeCliente(cliente.getNome());
 
+            // Persiste no banco
             em.getTransaction().begin();
             em.persist(venda);
             em.getTransaction().commit();
@@ -244,12 +249,12 @@ public class Cadastro {
         }
     }
 
-
-
+    // Lista todas as vendas realizadas
     public void mostrarVendas() {
         VendasService vendaService = new VendasService();
         List<Vendas> listaVendas = VendasService.listarTodas();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
         if (listaVendas.isEmpty()) {
             System.out.println("Nenhuma venda registrada.");
         } else {
@@ -265,57 +270,52 @@ public class Cadastro {
         }
     }
 
+    // Pesquisa vendas dentro de um intervalo de datas
     public void vendaPorData(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         Scanner scanner = new Scanner(System.in);
         VendasService service = new VendasService();
+
+        // Coleta da data inicial
         System.out.println("Data de inicio do periodo:");
-        System.out.println("Dia:");
-        int DiaI = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Mes:");
-        int MesI = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Ano:");
-        int AnoI = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Dia: "); int DiaI = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Mes: "); int MesI = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Ano: "); int AnoI = scanner.nextInt(); scanner.nextLine();
+
+        // Coleta da data final
         System.out.println("Data do fim do periodo:");
-        System.out.println("Dia:");
-        int DiaF = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Mes:");
-        int MesF = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Ano:");
-        int AnoF = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Dia: "); int DiaF = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Mes: "); int MesF = scanner.nextInt(); scanner.nextLine();
+        System.out.print("Ano: "); int AnoF = scanner.nextInt(); scanner.nextLine();
 
-        // Criação das datas
-        LocalDateTime dataInicio = LocalDate.of(AnoI, MesI, DiaI).atStartOfDay(); // Início do dia
-        LocalDateTime dataFim = LocalDate.of(AnoF, MesF, DiaF).atTime(LocalTime.MAX); // Fim do dia
+        // Cria objetos de data
+        LocalDateTime dataInicio = LocalDate.of(AnoI, MesI, DiaI).atStartOfDay();
+        LocalDateTime dataFim = LocalDate.of(AnoF, MesF, DiaF).atTime(LocalTime.MAX);
 
+        // Busca vendas no período
         List<Vendas> vendas = service.buscarPorPeriodo(dataInicio, dataFim);
 
+        // Exibe as vendas
         System.out.println("Vendas entre " + dataInicio + " e " + dataFim + ":");
         for (Vendas v : vendas) {
-            
-                System.out.println("--------------------------------------------------------");
-                System.out.println("ID da Venda: " + v.getId());
-                System.out.println("Cliente: " + v.getNomeCliente());
-                System.out.println("Veículo: " + v.getModeloVeiculo() + " - " + v.getMarcaVeiculo());
-                System.out.println("Preço: " + v.getPrecoVeiculo());
-                System.out.println("Data: " + v.getDataVenda().format(formatter));
+            System.out.println("--------------------------------------------------------");
+            System.out.println("ID da Venda: " + v.getId());
+            System.out.println("Cliente: " + v.getNomeCliente());
+            System.out.println("Veículo: " + v.getModeloVeiculo() + " - " + v.getMarcaVeiculo());
+            System.out.println("Preço: " + v.getPrecoVeiculo());
+            System.out.println("Data: " + v.getDataVenda().format(formatter));
         }
     }
 
+    // Mostra vendas feitas por um cliente específico
     public void mostrarVendasPorCliente() {
         VendasService vendasService = new VendasService();
-        vendasService.pedirIdCliente();  // Chama o metodo que solicita o ID do cliente e exibe as vendas
+        vendasService.pedirIdCliente();
     }
 
+    // Mostra clientes que compraram um veículo específico
     public void mostrarClientesPorVeiculo() {
         VendasService vendasService = new VendasService();
-        vendasService.pedirIdVeiculo();  // Solicita o ID do veículo e exibe os clientes
+        vendasService.pedirIdVeiculo();
     }
-
 }

@@ -89,7 +89,8 @@ public class FipeApiClient {
             System.out.println("Erro ao buscar modelos: " + e.getMessage());
         }
     }
-    //Criação de Veículo
+
+    // Função para buscar detalhes completos de um veículo
     public void detalhesVeiculo(String tipoVeiculo, int IdMarca, int IdModelo, String AnoECombs) {
         try {
             String urlDetalhes = "https://parallelum.com.br/api/v2/" + tipoVeiculo + "/brands/" + IdMarca + "/models/" + IdModelo + "/years/" + AnoECombs;
@@ -157,8 +158,7 @@ public class FipeApiClient {
         }
     }
 
-
-    // Metodo para fazer requisições HTTP
+    // Método para fazer requisições HTTP
     public String fazerRequisicao(String urlString) {
         try {
             URL url = new URL(urlString);
