@@ -50,32 +50,53 @@ public class Main {
                 case 1:
                     System.out.println("1-Nova venda");
                     System.out.println("2-Vendas realizadas");
-                    int op1= scanner.nextInt();
+                    op= scanner.nextInt();
                     scanner.nextLine();
-                    if(op1 == 1){
+                    if(op == 1){
                         cadastros.adicionarVenda();
-                    }else if(op1 == 2){
+                    }else if(op == 2){
                         cadastros.mostrarVendas();
+                        System.out.println("Procurar vendas de uma data especifica?");
+                        System.out.println("1-Sim");
+                        System.out.println("2-Nao");
+                        op = scanner.nextInt();
+                        scanner.nextLine();
+                        if(op ==1){
+                            cadastros.vendaPorData();
+                        }else{
+                            System.out.println("voltando ao menu...");
+                        }
                     }else{
-
-                    System.out.println("Opcao invalida!");
+                        System.out.println("Opcao invalida!");
                     }
                     break;
                 case 2:
                     System.out.println("1-Clientes");
                     System.out.println("2-Veiculos");
-                    int ope = scanner.nextInt();
+                    op = scanner.nextInt();
                     scanner.nextLine();
-                    if(ope == 1){
+                    if(op == 1){
                         cadastros.mostrarClientes();
-                    }else if(ope == 2){
+                        System.out.println("procurar por compras realizadas por algum cliente?");
+                        System.out.println("1-Sim/2-Nao");
+                        op = scanner.nextInt();
+                        if(op == 1){
+
+                        }else{
+                            System.out.println("Voltando ao menu...");
+                        }
+                    }else if(op == 2){
                         cadastros.mostrarVeiculos();
-                        System.out.println("Deseja atualizar o preço de algum dos veículos cadastrados?");
-                        System.out.println("1-Sim/2-Não");
+                        System.out.println("1-Procurar por nome (parcial ou completo)");
+                        System.out.println("2-Atualizar preco de algum dos veiculos");
                         op = scanner.nextInt();
                         scanner.nextLine();
                         if(op == 1){
+                            cadastros.pesquisaParcial();
+                        }if (op == 2){
                             cadastros.atualizarPreco();
+                        }else{
+                            System.out.println("voltando ao menu...");
                         }
                     }
                     break;

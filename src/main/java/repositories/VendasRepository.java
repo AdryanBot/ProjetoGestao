@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import utils.JPAUtil;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.List;
 
 public class VendasRepository {
@@ -25,16 +25,26 @@ public class VendasRepository {
         return vendas;
     }
 
-    public List<Vendas> buscarPorData(LocalDate inicio, LocalDate fim) {
+    public List<Vendas> buscarPorData(LocalDateTime inicio, LocalDateTime fim) {
         EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<Vendas> query = em.createQuery(
-                "SELECT v FROM Vendas v WHERE v.dataVenda BETWEEN :inicio AND :fim", Vendas.class);
+        TypedQuery<Vendas> query = em.createQuery("SELECT v FROM Vendas v WHERE v.dataVenda BETWEEN :inicio AND :fim", Vendas.class);
         query.setParameter("inicio", inicio);
         query.setParameter("fim", fim);
         List<Vendas> resultado = query.getResultList();
         em.close();
         return resultado;
     }
+    
+    public List<Vendas> buscarVendasComVeiculoPorCliente(Long idCliente) {
+        EntityManager em = JPAUtil.getEntityManager();
+        String jpql = "SELECT v FROM Vendas v " +"JOIN v.veiculo veiculo " + "WHERE v.cliente.id = :idCliente";  
+        TypedQuery<Vendas> query = em.createQuery(jpql, Vendas.class);
+        query.setParameter("idCliente", idCliente);
+        List<Vendas> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
 
     public List<Vendas> buscarPorIdCliente(Long idCliente) {
         EntityManager em = JPAUtil.getEntityManager();

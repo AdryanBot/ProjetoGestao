@@ -3,11 +3,14 @@ package services;
 import entities.Cliente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import repositories.ClienteRepository;
 import utils.JPAUtil;
 
 import java.util.List;
 
 public class ClienteService {
+
+    public static ClienteRepository clienteRepo = new ClienteRepository();
 
     public List<Cliente> listarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
@@ -33,6 +36,11 @@ public class ClienteService {
             em.getTransaction().commit();
         }
         em.close();
+    }
+
+    public void mostrarQtdCliente() {
+        Long total = clienteRepo.contarCliente();
+        System.out.println("Total de clientes cadastrados: " + total);
     }
     
 }

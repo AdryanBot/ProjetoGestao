@@ -1,46 +1,42 @@
 package services;
 
 import entities.Veiculo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-import utils.JPAUtil;
+import repositories.VeiculoRepository;
 
 import java.util.List;
 
 public class VeiculoService {
 
+    private final VeiculoRepository veiculoRepository;
+    public static VeiculoRepository veiculoRepo = new VeiculoRepository();
+
+    public VeiculoService() {
+        this.veiculoRepository = new VeiculoRepository();
+    }
+
     public List<Veiculo> listarTodos() {
-        EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<Veiculo> query = em.createQuery("FROM Veiculo", Veiculo.class);
-        List<Veiculo> veiculos = query.getResultList();
-        em.close();
-        return veiculos;
+        return veiculoRepository.findAll();
     }
 
     public List<Veiculo> listarPorTipo(int tipo) {
-        EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<Veiculo> query = em.createQuery("FROM Veiculo v WHERE v.veiculoTipo = :tipo", Veiculo.class);
-        query.setParameter("tipo", tipo);
-        List<Veiculo> veiculos = query.getResultList();
-        em.close();
-        return veiculos;
+        return veiculoRepository.findByTipo(tipo);
     }
 
+    public List<Veiculo> buscarPorModelo(String termo) {
+        return veiculoRepository.buscarPorModeloParcial(termo);
+    }
+    
+
     public Veiculo buscarPorId(Long id) {
-        EntityManager em = JPAUtil.getEntityManager();
-        Veiculo veiculo = em.find(Veiculo.class, id);
-        em.close();
-        return veiculo;
+        return veiculoRepository.findById(id);
     }
 
     public void removerPorId(Long id) {
-        EntityManager em = JPAUtil.getEntityManager();
-        Veiculo veiculo = em.find(Veiculo.class, id);
-        if (veiculo != null) {
-            em.getTransaction().begin();
-            em.remove(veiculo);
-            em.getTransaction().commit();
-        }
-        em.close();
+        veiculoRepository.deleteById(id);
+    }
+
+    public void mostrarQtdVeiculos(){
+        Long total = veiculoRepo.contarVeiculos();
+        System.out.println("Total de veiculos cadastrados: " + total);
     }
 }

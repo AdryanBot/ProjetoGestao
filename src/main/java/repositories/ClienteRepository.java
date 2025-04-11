@@ -2,7 +2,10 @@ package repositories;
 
 import entities.Cliente;
 import entities.Moto;
+import entities.Vendas;
 import jakarta.persistence.*;
+import utils.JPAUtil;
+
 import java.util.List;
 
 public class ClienteRepository {
@@ -39,6 +42,13 @@ public class ClienteRepository {
         em.remove(cliente);
         em.getTransaction().commit();
         em.close();
+    }
+
+    public Long contarCliente() {
+        EntityManager em = JPAUtil.getEntityManager();
+        Long count = em.createQuery("SELECT COUNT(c) FROM Cliente c", Long.class).getSingleResult();
+        em.close();
+        return count;
     }
     
 }
