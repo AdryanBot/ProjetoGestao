@@ -81,7 +81,7 @@ public class Main {
                         System.out.println("1-Sim/2-Nao");
                         op = scanner.nextInt();
                         if(op == 1){
-
+                            cadastros.mostrarVendasPorCliente();
                         }else{
                             System.out.println("Voltando ao menu...");
                         }
