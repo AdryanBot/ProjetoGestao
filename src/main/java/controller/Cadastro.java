@@ -310,7 +310,7 @@ public class Cadastro {
 
     public void mostrarVendasPorCliente() {
         VendasService vendasService = new VendasService();
-        vendasService.pedirIdCliente();  // Chama o método que solicita o ID do cliente e exibe as vendas
+        vendasService.pedirIdCliente();  // Chama o metodo que solicita o ID do cliente e exibe as vendas
     }
 
     public void mostrarClientesPorVeiculo() {

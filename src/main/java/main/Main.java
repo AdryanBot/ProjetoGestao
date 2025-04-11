@@ -87,6 +87,7 @@ public class Main {
                         }
                     }else if(op == 2){
                         cadastros.mostrarVeiculos();
+                        System.out.println("--------------------------------------------------------");
                         System.out.println("1-Procurar por nome (parcial ou completo)");
                         System.out.println("2-Atualizar preco de algum dos veiculos");
                         System.out.println("3-Procurar cliente que compraram veiculos");
