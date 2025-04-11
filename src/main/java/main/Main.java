@@ -89,12 +89,16 @@ public class Main {
                         cadastros.mostrarVeiculos();
                         System.out.println("1-Procurar por nome (parcial ou completo)");
                         System.out.println("2-Atualizar preco de algum dos veiculos");
+                        System.out.println("3-Procurar cliente que compraram veiculos");
+                        System.out.println("4-Voltar ao menu");
                         op = scanner.nextInt();
                         scanner.nextLine();
                         if(op == 1){
                             cadastros.pesquisaParcial();
-                        }if (op == 2){
+                        }else if(op == 2){
                             cadastros.atualizarPreco();
+                        }else if(op == 3){
+                            cadastros.mostrarClientesPorVeiculo();
                         }else{
                             System.out.println("voltando ao menu...");
                         }

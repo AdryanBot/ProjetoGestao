@@ -61,6 +61,31 @@ public class VendasService {
         mostrarVendasPorCliente(idCliente);
     }
 
+    public void mostrarClientesPorVeiculo(Long idVeiculo) {
+        List<Vendas> vendas = vendaRepo.buscarVendasPorVeiculo(idVeiculo);
+
+        if (vendas.isEmpty()) {
+            System.out.println("Nenhum cliente comprou o veículo com ID: " + idVeiculo);
+        } else {
+            for (Vendas v : vendas) {
+                System.out.println("--------------------------------------------------------");
+                System.out.println("ID da Venda: " + v.getId());
+                System.out.println("Nome do Cliente: " + v.getCliente().getNome());
+                System.out.println("CPF do Cliente: " + v.getCliente().getCpf());
+                System.out.println("Data da Venda: " + v.getDataVenda());
+            }
+        }
+    }
+
+    public void pedirIdVeiculo() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Digite o ID do veículo para ver quem comprou: ");
+        Long idVeiculo = scanner.nextLong();
+        scanner.nextLine(); // limpa o buffer
+
+        mostrarClientesPorVeiculo(idVeiculo);
+    }
+
     public List<Vendas> buscarPorClienteId(Long idCliente) {
         return vendaRepo.buscarPorIdCliente(idCliente);
     }

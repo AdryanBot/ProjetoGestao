@@ -45,11 +45,26 @@ public class VendasRepository {
         return resultado;
     }
 
+    public List<Vendas> buscarVendasPorVeiculo(Long idVeiculo) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        String jpql = "SELECT v FROM Vendas v " +
+                      "JOIN v.cliente cliente " +
+                      "WHERE v.veiculo.id = :idVeiculo";
+
+        TypedQuery<Vendas> query = em.createQuery(jpql, Vendas.class);
+        query.setParameter("idVeiculo", idVeiculo);
+
+        List<Vendas> resultado = query.getResultList();
+        em.close();
+
+        return resultado;
+    }
+
 
     public List<Vendas> buscarPorIdCliente(Long idCliente) {
         EntityManager em = JPAUtil.getEntityManager();
-        TypedQuery<Vendas> query = em.createQuery(
-                "SELECT v FROM Vendas v WHERE v.cliente.id = :idCliente", Vendas.class);
+        TypedQuery<Vendas> query = em.createQuery("SELECT v FROM Vendas v WHERE v.cliente.id = :idCliente", Vendas.class);
         query.setParameter("idCliente", idCliente);
         List<Vendas> resultado = query.getResultList();
         em.close();

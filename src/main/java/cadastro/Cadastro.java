@@ -313,4 +313,9 @@ public class Cadastro {
         vendasService.pedirIdCliente();  // Chama o método que solicita o ID do cliente e exibe as vendas
     }
 
+    public void mostrarClientesPorVeiculo() {
+        VendasService vendasService = new VendasService();
+        vendasService.pedirIdVeiculo();  // Solicita o ID do veículo e exibe os clientes
+    }
+
 }
